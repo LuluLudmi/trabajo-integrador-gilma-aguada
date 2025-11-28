@@ -2,8 +2,13 @@
 package ar.edu.centro8.daw.trabajo_integrador_gilma_aguada.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
+/**
+ * Entidad PedidoDetalle
+ * Representa el detalle de cada línea de un pedido (producto, cantidad, precio)
+ */
 @Entity
 @Table(name = "pedido_detalle")
 @Access(AccessType.FIELD)
@@ -15,17 +20,25 @@ public class PedidoDetalle {
     @ManyToOne
     @MapsId("pedidoId")
     @JoinColumn(name = "id_pedido")
+    @NotNull(message = "El pedido es obligatorio")
     private Pedido pedido;
 
     @ManyToOne
     @MapsId("productoId")
     @JoinColumn(name = "id_producto")
+    @NotNull(message = "El producto es obligatorio")
     private Producto producto;
 
     @Column(name = "cantidad", nullable = false)
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 1, message = "La cantidad debe ser al menos 1")
+    @Max(value = 999, message = "La cantidad no puede exceder 999")
     private Integer cantidad;
 
     @Column(name = "precio_unitario", nullable = false, precision = 38, scale = 2)
+    @NotNull(message = "El precio unitario es obligatorio")
+    @DecimalMin(value = "0.01", message = "El precio unitario debe ser mayor a 0")
+    @DecimalMax(value = "1000000", message = "El precio unitario no puede exceder 1.000.000")
     private BigDecimal precioUnitario;
 
     public PedidoDetalle() {

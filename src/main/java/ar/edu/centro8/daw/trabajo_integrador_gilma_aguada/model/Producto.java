@@ -2,9 +2,14 @@
 package ar.edu.centro8.daw.trabajo_integrador_gilma_aguada.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Entidad Producto
+ * Representa un producto disponible en el sistema de reparación
+ */
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -14,12 +19,20 @@ public class Producto {
     private Integer idProducto;
 
     @Column(nullable = false)
+    @NotBlank(message = "El nombre del producto es obligatorio")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
     private String nombre;
 
     @Column(nullable = false, precision = 38, scale = 2)
+    @NotNull(message = "El precio es obligatorio")
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor a 0")
+    @DecimalMax(value = "1000000", message = "El precio no puede exceder 1.000.000")
     private BigDecimal precio;
 
     @Column(nullable = false)
+    @NotNull(message = "El stock es obligatorio")
+    @Min(value = 0, message = "El stock no puede ser negativo")
+    @Max(value = 999999, message = "El stock no puede exceder 999.999")
     private Integer stock;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)

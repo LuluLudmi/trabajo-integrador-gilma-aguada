@@ -2,8 +2,13 @@
 package ar.edu.centro8.daw.trabajo_integrador_gilma_aguada.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.util.List;
 
+/**
+ * Entidad Cliente
+ * Representa un cliente del sistema de reparación de electrodomésticos
+ */
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -13,12 +18,19 @@ public class Cliente {
     private Integer idCliente;
 
     @Column(nullable = false)
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
     private String nombre;
 
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email debe ser válido")
     private String email;
 
     @Column(nullable = false)
+    @NotNull(message = "El teléfono es obligatorio")
+    @Min(value = 1000000, message = "El teléfono debe tener al menos 7 dígitos")
+    @Max(value = 999999999, message = "El teléfono no debe exceder 9 dígitos")
     private Integer telefono;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
