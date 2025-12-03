@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Entidad Cliente
- * Representa un cliente del sistema de reparación de electrodomésticos
+ * Representa un cliente del sistema de reparación de electrodomésticos de Zona Refri.
  */
 @Entity
 @Table(name = "clientes")
